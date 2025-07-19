@@ -17,7 +17,7 @@ import (
 func ListenToEvents(client *ethclient.Client, contractAddr common.Address, db *gorm.DB) {
 	contractInstance, err := contracts.NewContracts(contractAddr, client)
 	if err != nil {
-		log.Fatalf("Failed to bind contract: %v", err)
+		log.Fatalf("Bind contract lỗi: %v", err)
 	}
 
 	query := ethereum.FilterQuery{
@@ -27,35 +27,34 @@ func ListenToEvents(client *ethclient.Client, contractAddr common.Address, db *g
 	logs := make(chan types.Log)
 	sub, err := client.SubscribeFilterLogs(context.Background(), query, logs)
 	if err != nil {
-		log.Fatalf("subscribe error: %v", err)
+		log.Fatalf("Lỗi subscribe: %v", err)
 	}
 
-	log.Println("Listening for StepAdded events...")
+	log.Println("⏳ Đang lắng nghe sự kiện StepAdded...")
 
-	// Lắng nghe log
 	for {
 		select {
 		case err := <-sub.Err():
-			log.Println("Subscription error:", err)
-
+			log.Println("Lỗi subscription:", err)
 		case vLog := <-logs:
-			parsedLog, err := contractInstance.ParseStepAdded(vLog)
+			event, err := contractInstance.ParseStepAdded(vLog)
 			if err != nil {
-				log.Println("Failed to parse StepAdded event:", err)
+				log.Println("Parse log lỗi:", err)
 				continue
 			}
 
 			trace := models.ProductTrace{
-				ProductID: parsedLog.ProductId,
-				EventType: parsedLog.EventType,
-				Location:  parsedLog.Location,
+				ProductID: event.ProductId,
+				EventType: event.EventType,
+				Location:  event.Location,
 				TxHash:    vLog.TxHash.Hex(),
 				TxStatus:  "SUCCESS",
 			}
+
 			if err := db.Create(&trace).Error; err != nil {
-				log.Println("DB insert error:", err)
+				log.Println("Lỗi ghi DB:", err)
 			} else {
-				log.Printf("StepAdded event saved: ProductID=%s\n", parsedLog.ProductId)
+				log.Printf("Event thêm bước truy xuất ghi DB: %s\n", event.ProductId)
 			}
 		}
 	}
