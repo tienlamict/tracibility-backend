@@ -11,7 +11,9 @@ database:
   dbname: "block_trace_db"
 
 ethereum:
-  rpc_url: "https://26bd7fc0869847ac95e791431d1ac9bb:bMUMoQWLm29fMSJvxQ8dwssRvSzUmr9KlCKIDfyjT09aPbFysRP1cw@sepolia.infura.io/v3/26bd7fc0869847ac95e791431d1ac9bb"
+  rpc_url: "wss://26bd7fc0869847ac95e791431d1ac9bb:bMUMoQWLm29fMSJvxQ8dwssRvSzUmr9KlCKIDfyjT09aPbFysRP1cw@sepolia.infura.io/ws/v3/26bd7fc0869847ac95e791431d1ac9bb"
   private_key: "8a52d5fd2c7ba077a4b5d9345b7891b46dfa1d7f1d75dc7e97c58c1f126ac2f8" # private key - Lấy từ ví metamask
-  contract_address: "0x6A5d19324219E5C4Befa25097d419e392f7867EE"
+  contract_address: "0xe96bd51be85c6c0f03ce586b4621752b0ba872ee"
+  #0xe96bd51be85c6c0f03ce586b4621752b0ba872ee --old
+  #0x6A5d19324219E5C4Befa25097d419e392f7867EE --new
   api_key: "bMUMoQWLm29fMSJvxQ8dwssRvSzUmr9KlCKIDfyjT09aPbFysRP1cw"

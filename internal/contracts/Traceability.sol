@@ -24,10 +24,7 @@ contract Traceability is ReentrancyGuard {
 
     // -------------------- KHAI BÁO CẤU TRÚC --------------------
     struct Step {
-		string traceID;			// Mã truy xuất
-        string productId;
         string location;       // Địa điểm thực hiện
-        string eventType;      // Loại hành động
         string description;    // Mô tả hành động
         uint256 timestamp;     // Thời gian thực hiện
         address actor;         // Địa chỉ ví người thực hiện
@@ -35,7 +32,7 @@ contract Traceability is ReentrancyGuard {
 
     struct Product {
         string productId;      // Mã sản phẩm duy nhất
-        string productName;    // Tên sản phẩm
+        string name;           // Tên sản phẩm
         string ipfsHash;       // Hash IPFS chứa metadata mô tả (ảnh, chứng nhận…)
         address creator;       // Địa chỉ nhà sản xuất
         Step[] steps;          // Các bước truy xuất
@@ -46,8 +43,8 @@ contract Traceability is ReentrancyGuard {
     mapping(address => bool) private authorized;         // Danh sách ví được cấp quyền
 
     // -------------------- SỰ KIỆN --------------------
-    event ProductCreated(string productId, string productName, address indexed creator);
-    event StepAdded(string traceID, string productId, string location, string eventType, string description, address indexed actor);
+    event ProductCreated(string productId, string name, address indexed creator);
+    event StepAdded(string productId, string location, string description, address indexed actor);
     event Authorized(address indexed user);
     event Revoked(address indexed user);
 
@@ -71,30 +68,28 @@ contract Traceability is ReentrancyGuard {
     // -------------------- TẠO SẢN PHẨM MỚI --------------------
     function createProduct(
         string memory productId,
-        string memory productName,
+        string memory name,
         string memory ipfsHash
     ) external onlyAuthorized nonReentrant {
         require(bytes(productId).length > 0, "Ma san pham rong");
-        require(bytes(productName).length > 0, "Ten san pham rong");
+        require(bytes(name).length > 0, "Ten san pham rong");
         require(bytes(ipfsHash).length > 10, "IPFS hash khong hop le");
         require(!products[productId].exists, "San pham da ton tai");
 
         Product storage p = products[productId];
         p.productId = productId;
-        p.productName = productName;
+        p.name = name;
         p.ipfsHash = ipfsHash;
         p.creator = msg.sender;
         p.exists = true;
 
-        emit ProductCreated(productId, productName, msg.sender);
+        emit ProductCreated(productId, name, msg.sender);
     }
 
     // -------------------- THÊM BƯỚC TRUY XUẤT --------------------
     function addStep(
-		string memory traceID,
         string memory productId,
         string memory location,
-		string memory eventType,
         string memory description
     ) external onlyAuthorized nonReentrant {
         require(products[productId].exists, "San pham khong ton tai");
@@ -102,10 +97,7 @@ contract Traceability is ReentrancyGuard {
         require(bytes(description).length > 0, "Mo ta rong");
 
         Step memory s = Step({
-			traceID: traceID,
-            productId: productId,
             location: location,
-            eventType: eventType,
             description: description,
             timestamp: block.timestamp,
             actor: msg.sender
@@ -113,7 +105,7 @@ contract Traceability is ReentrancyGuard {
 
         products[productId].steps.push(s);
 
-        emit StepAdded(traceID, productId, location, eventType, description, msg.sender);
+        emit StepAdded(productId, location, description, msg.sender);
     }
 
     // -------------------- TRUY VẤN THÔNG TIN --------------------
@@ -128,11 +120,11 @@ contract Traceability is ReentrancyGuard {
     function getProduct(string memory productId)
         external
         view
-        returns (string memory productName, string memory ipfsHash, address creator, uint stepCount)
+        returns (string memory name, string memory ipfsHash, address creator, uint stepCount)
     {
         require(products[productId].exists, "San pham khong ton tai");
         Product storage p = products[productId];
-        return (p.productName, p.ipfsHash, p.creator, p.steps.length);
+        return (p.name, p.ipfsHash, p.creator, p.steps.length);
     }
 
     /// @notice Kiểm tra sản phẩm đã tồn tại chưa

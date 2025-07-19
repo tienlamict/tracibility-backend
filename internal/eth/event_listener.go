@@ -30,7 +30,7 @@ func ListenToEvents(client *ethclient.Client, contractAddr common.Address, db *g
 		log.Fatalf("Lỗi subscribe: %v", err)
 	}
 
-	log.Println("⏳ Đang lắng nghe sự kiện StepAdded...")
+	log.Println("Đang lắng nghe sự kiện...")
 
 	for {
 		select {
@@ -45,10 +45,11 @@ func ListenToEvents(client *ethclient.Client, contractAddr common.Address, db *g
 
 			trace := models.ProductTrace{
 				ProductID: event.ProductId,
-				EventType: event.EventType,
-				Location:  event.Location,
-				TxHash:    vLog.TxHash.Hex(),
-				TxStatus:  "SUCCESS",
+				//EventType: event.EventType,
+				Location:    event.Location,
+				Description: event.Description,
+				TxHash:      vLog.TxHash.Hex(),
+				TxStatus:    "SUCCESS",
 			}
 
 			if err := db.Create(&trace).Error; err != nil {

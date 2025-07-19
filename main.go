@@ -22,6 +22,7 @@ func main() {
 		fmt.Printf("Không thể khởi tạo contract service: %v", err)
 	}
 
+	// Goroutine để lắng nghe sự kiện từ blockchain
 	go jobs.StartEventListener(db, contractService.Config.RPCUrl, contractService.Config.ContractAddress)
 
 	r := routes.NewRouter(db)

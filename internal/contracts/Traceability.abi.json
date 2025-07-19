@@ -29,7 +29,7 @@
 			{
 				"indexed": false,
 				"internalType": "string",
-				"name": "productName",
+				"name": "name",
 				"type": "string"
 			},
 			{
@@ -61,12 +61,6 @@
 			{
 				"indexed": false,
 				"internalType": "string",
-				"name": "traceID",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
 				"name": "productId",
 				"type": "string"
 			},
@@ -74,12 +68,6 @@
 				"indexed": false,
 				"internalType": "string",
 				"name": "location",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "eventType",
 				"type": "string"
 			},
 			{
@@ -102,22 +90,12 @@
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "traceID",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
 				"name": "productId",
 				"type": "string"
 			},
 			{
 				"internalType": "string",
 				"name": "location",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "eventType",
 				"type": "string"
 			},
 			{
@@ -153,7 +131,7 @@
 			},
 			{
 				"internalType": "string",
-				"name": "productName",
+				"name": "name",
 				"type": "string"
 			},
 			{
@@ -179,7 +157,7 @@
 		"outputs": [
 			{
 				"internalType": "string",
-				"name": "productName",
+				"name": "name",
 				"type": "string"
 			},
 			{
@@ -215,22 +193,7 @@
 				"components": [
 					{
 						"internalType": "string",
-						"name": "traceID",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "productId",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
 						"name": "location",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "eventType",
 						"type": "string"
 					},
 					{

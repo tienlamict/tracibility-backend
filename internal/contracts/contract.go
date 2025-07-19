@@ -31,10 +31,7 @@ var (
 
 // TraceabilityStep is an auto generated low-level Go binding around an user-defined struct.
 type TraceabilityStep struct {
-	TraceID     string
-	ProductId   string
 	Location    string
-	EventType   string
 	Description string
 	Timestamp   *big.Int
 	Actor       common.Address
@@ -42,7 +39,7 @@ type TraceabilityStep struct {
 
 // ContractsMetaData contains all meta data concerning the Contracts contract.
 var ContractsMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"Authorized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"productName\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"}],\"name\":\"ProductCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"Revoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"traceID\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"location\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"eventType\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"actor\",\"type\":\"address\"}],\"name\":\"StepAdded\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"traceID\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"location\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"eventType\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"}],\"name\":\"addStep\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"authorize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"productName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"ipfsHash\",\"type\":\"string\"}],\"name\":\"createProduct\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"}],\"name\":\"getProduct\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"productName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"ipfsHash\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"stepCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"}],\"name\":\"getSteps\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"traceID\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"location\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"eventType\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"actor\",\"type\":\"address\"}],\"internalType\":\"structTraceability.Step[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"isAuthorized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"}],\"name\":\"isProductExists\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"revoke\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"Authorized\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"}],\"name\":\"ProductCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"Revoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"location\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"actor\",\"type\":\"address\"}],\"name\":\"StepAdded\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"location\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"}],\"name\":\"addStep\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"authorize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"ipfsHash\",\"type\":\"string\"}],\"name\":\"createProduct\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"}],\"name\":\"getProduct\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"ipfsHash\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"creator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"stepCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"}],\"name\":\"getSteps\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"location\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"actor\",\"type\":\"address\"}],\"internalType\":\"structTraceability.Step[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"isAuthorized\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"productId\",\"type\":\"string\"}],\"name\":\"isProductExists\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"revoke\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // ContractsABI is the input ABI used to generate the binding from.
@@ -193,27 +190,27 @@ func (_Contracts *ContractsTransactorRaw) Transact(opts *bind.TransactOpts, meth
 
 // GetProduct is a free data retrieval call binding the contract method 0x68111cce.
 //
-// Solidity: function getProduct(string productId) view returns(string productName, string ipfsHash, address creator, uint256 stepCount)
+// Solidity: function getProduct(string productId) view returns(string name, string ipfsHash, address creator, uint256 stepCount)
 func (_Contracts *ContractsCaller) GetProduct(opts *bind.CallOpts, productId string) (struct {
-	ProductName string
-	IpfsHash    string
-	Creator     common.Address
-	StepCount   *big.Int
+	Name      string
+	IpfsHash  string
+	Creator   common.Address
+	StepCount *big.Int
 }, error) {
 	var out []interface{}
 	err := _Contracts.contract.Call(opts, &out, "getProduct", productId)
 
 	outstruct := new(struct {
-		ProductName string
-		IpfsHash    string
-		Creator     common.Address
-		StepCount   *big.Int
+		Name      string
+		IpfsHash  string
+		Creator   common.Address
+		StepCount *big.Int
 	})
 	if err != nil {
 		return *outstruct, err
 	}
 
-	outstruct.ProductName = *abi.ConvertType(out[0], new(string)).(*string)
+	outstruct.Name = *abi.ConvertType(out[0], new(string)).(*string)
 	outstruct.IpfsHash = *abi.ConvertType(out[1], new(string)).(*string)
 	outstruct.Creator = *abi.ConvertType(out[2], new(common.Address)).(*common.Address)
 	outstruct.StepCount = *abi.ConvertType(out[3], new(*big.Int)).(**big.Int)
@@ -224,31 +221,31 @@ func (_Contracts *ContractsCaller) GetProduct(opts *bind.CallOpts, productId str
 
 // GetProduct is a free data retrieval call binding the contract method 0x68111cce.
 //
-// Solidity: function getProduct(string productId) view returns(string productName, string ipfsHash, address creator, uint256 stepCount)
+// Solidity: function getProduct(string productId) view returns(string name, string ipfsHash, address creator, uint256 stepCount)
 func (_Contracts *ContractsSession) GetProduct(productId string) (struct {
-	ProductName string
-	IpfsHash    string
-	Creator     common.Address
-	StepCount   *big.Int
+	Name      string
+	IpfsHash  string
+	Creator   common.Address
+	StepCount *big.Int
 }, error) {
 	return _Contracts.Contract.GetProduct(&_Contracts.CallOpts, productId)
 }
 
 // GetProduct is a free data retrieval call binding the contract method 0x68111cce.
 //
-// Solidity: function getProduct(string productId) view returns(string productName, string ipfsHash, address creator, uint256 stepCount)
+// Solidity: function getProduct(string productId) view returns(string name, string ipfsHash, address creator, uint256 stepCount)
 func (_Contracts *ContractsCallerSession) GetProduct(productId string) (struct {
-	ProductName string
-	IpfsHash    string
-	Creator     common.Address
-	StepCount   *big.Int
+	Name      string
+	IpfsHash  string
+	Creator   common.Address
+	StepCount *big.Int
 }, error) {
 	return _Contracts.Contract.GetProduct(&_Contracts.CallOpts, productId)
 }
 
 // GetSteps is a free data retrieval call binding the contract method 0xc11b668a.
 //
-// Solidity: function getSteps(string productId) view returns((string,string,string,string,string,uint256,address)[])
+// Solidity: function getSteps(string productId) view returns((string,string,uint256,address)[])
 func (_Contracts *ContractsCaller) GetSteps(opts *bind.CallOpts, productId string) ([]TraceabilityStep, error) {
 	var out []interface{}
 	err := _Contracts.contract.Call(opts, &out, "getSteps", productId)
@@ -265,14 +262,14 @@ func (_Contracts *ContractsCaller) GetSteps(opts *bind.CallOpts, productId strin
 
 // GetSteps is a free data retrieval call binding the contract method 0xc11b668a.
 //
-// Solidity: function getSteps(string productId) view returns((string,string,string,string,string,uint256,address)[])
+// Solidity: function getSteps(string productId) view returns((string,string,uint256,address)[])
 func (_Contracts *ContractsSession) GetSteps(productId string) ([]TraceabilityStep, error) {
 	return _Contracts.Contract.GetSteps(&_Contracts.CallOpts, productId)
 }
 
 // GetSteps is a free data retrieval call binding the contract method 0xc11b668a.
 //
-// Solidity: function getSteps(string productId) view returns((string,string,string,string,string,uint256,address)[])
+// Solidity: function getSteps(string productId) view returns((string,string,uint256,address)[])
 func (_Contracts *ContractsCallerSession) GetSteps(productId string) ([]TraceabilityStep, error) {
 	return _Contracts.Contract.GetSteps(&_Contracts.CallOpts, productId)
 }
@@ -370,25 +367,25 @@ func (_Contracts *ContractsCallerSession) Owner() (common.Address, error) {
 	return _Contracts.Contract.Owner(&_Contracts.CallOpts)
 }
 
-// AddStep is a paid mutator transaction binding the contract method 0x2c3cd093.
+// AddStep is a paid mutator transaction binding the contract method 0xbdc4a9dc.
 //
-// Solidity: function addStep(string traceID, string productId, string location, string eventType, string description) returns()
-func (_Contracts *ContractsTransactor) AddStep(opts *bind.TransactOpts, traceID string, productId string, location string, eventType string, description string) (*types.Transaction, error) {
-	return _Contracts.contract.Transact(opts, "addStep", traceID, productId, location, eventType, description)
+// Solidity: function addStep(string productId, string location, string description) returns()
+func (_Contracts *ContractsTransactor) AddStep(opts *bind.TransactOpts, productId string, location string, description string) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "addStep", productId, location, description)
 }
 
-// AddStep is a paid mutator transaction binding the contract method 0x2c3cd093.
+// AddStep is a paid mutator transaction binding the contract method 0xbdc4a9dc.
 //
-// Solidity: function addStep(string traceID, string productId, string location, string eventType, string description) returns()
-func (_Contracts *ContractsSession) AddStep(traceID string, productId string, location string, eventType string, description string) (*types.Transaction, error) {
-	return _Contracts.Contract.AddStep(&_Contracts.TransactOpts, traceID, productId, location, eventType, description)
+// Solidity: function addStep(string productId, string location, string description) returns()
+func (_Contracts *ContractsSession) AddStep(productId string, location string, description string) (*types.Transaction, error) {
+	return _Contracts.Contract.AddStep(&_Contracts.TransactOpts, productId, location, description)
 }
 
-// AddStep is a paid mutator transaction binding the contract method 0x2c3cd093.
+// AddStep is a paid mutator transaction binding the contract method 0xbdc4a9dc.
 //
-// Solidity: function addStep(string traceID, string productId, string location, string eventType, string description) returns()
-func (_Contracts *ContractsTransactorSession) AddStep(traceID string, productId string, location string, eventType string, description string) (*types.Transaction, error) {
-	return _Contracts.Contract.AddStep(&_Contracts.TransactOpts, traceID, productId, location, eventType, description)
+// Solidity: function addStep(string productId, string location, string description) returns()
+func (_Contracts *ContractsTransactorSession) AddStep(productId string, location string, description string) (*types.Transaction, error) {
+	return _Contracts.Contract.AddStep(&_Contracts.TransactOpts, productId, location, description)
 }
 
 // Authorize is a paid mutator transaction binding the contract method 0xb6a5d7de.
@@ -414,23 +411,23 @@ func (_Contracts *ContractsTransactorSession) Authorize(user common.Address) (*t
 
 // CreateProduct is a paid mutator transaction binding the contract method 0xd768468b.
 //
-// Solidity: function createProduct(string productId, string productName, string ipfsHash) returns()
-func (_Contracts *ContractsTransactor) CreateProduct(opts *bind.TransactOpts, productId string, productName string, ipfsHash string) (*types.Transaction, error) {
-	return _Contracts.contract.Transact(opts, "createProduct", productId, productName, ipfsHash)
+// Solidity: function createProduct(string productId, string name, string ipfsHash) returns()
+func (_Contracts *ContractsTransactor) CreateProduct(opts *bind.TransactOpts, productId string, name string, ipfsHash string) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "createProduct", productId, name, ipfsHash)
 }
 
 // CreateProduct is a paid mutator transaction binding the contract method 0xd768468b.
 //
-// Solidity: function createProduct(string productId, string productName, string ipfsHash) returns()
-func (_Contracts *ContractsSession) CreateProduct(productId string, productName string, ipfsHash string) (*types.Transaction, error) {
-	return _Contracts.Contract.CreateProduct(&_Contracts.TransactOpts, productId, productName, ipfsHash)
+// Solidity: function createProduct(string productId, string name, string ipfsHash) returns()
+func (_Contracts *ContractsSession) CreateProduct(productId string, name string, ipfsHash string) (*types.Transaction, error) {
+	return _Contracts.Contract.CreateProduct(&_Contracts.TransactOpts, productId, name, ipfsHash)
 }
 
 // CreateProduct is a paid mutator transaction binding the contract method 0xd768468b.
 //
-// Solidity: function createProduct(string productId, string productName, string ipfsHash) returns()
-func (_Contracts *ContractsTransactorSession) CreateProduct(productId string, productName string, ipfsHash string) (*types.Transaction, error) {
-	return _Contracts.Contract.CreateProduct(&_Contracts.TransactOpts, productId, productName, ipfsHash)
+// Solidity: function createProduct(string productId, string name, string ipfsHash) returns()
+func (_Contracts *ContractsTransactorSession) CreateProduct(productId string, name string, ipfsHash string) (*types.Transaction, error) {
+	return _Contracts.Contract.CreateProduct(&_Contracts.TransactOpts, productId, name, ipfsHash)
 }
 
 // Revoke is a paid mutator transaction binding the contract method 0x74a8f103.
@@ -667,15 +664,15 @@ func (it *ContractsProductCreatedIterator) Close() error {
 
 // ContractsProductCreated represents a ProductCreated event raised by the Contracts contract.
 type ContractsProductCreated struct {
-	ProductId   string
-	ProductName string
-	Creator     common.Address
-	Raw         types.Log // Blockchain specific contextual infos
+	ProductId string
+	Name      string
+	Creator   common.Address
+	Raw       types.Log // Blockchain specific contextual infos
 }
 
 // FilterProductCreated is a free log retrieval operation binding the contract event 0x4478fdb5cca1a28d79052038c209db14519451af9c6bc6e753a2614e5ea43f1a.
 //
-// Solidity: event ProductCreated(string productId, string productName, address indexed creator)
+// Solidity: event ProductCreated(string productId, string name, address indexed creator)
 func (_Contracts *ContractsFilterer) FilterProductCreated(opts *bind.FilterOpts, creator []common.Address) (*ContractsProductCreatedIterator, error) {
 
 	var creatorRule []interface{}
@@ -692,7 +689,7 @@ func (_Contracts *ContractsFilterer) FilterProductCreated(opts *bind.FilterOpts,
 
 // WatchProductCreated is a free log subscription operation binding the contract event 0x4478fdb5cca1a28d79052038c209db14519451af9c6bc6e753a2614e5ea43f1a.
 //
-// Solidity: event ProductCreated(string productId, string productName, address indexed creator)
+// Solidity: event ProductCreated(string productId, string name, address indexed creator)
 func (_Contracts *ContractsFilterer) WatchProductCreated(opts *bind.WatchOpts, sink chan<- *ContractsProductCreated, creator []common.Address) (event.Subscription, error) {
 
 	var creatorRule []interface{}
@@ -734,7 +731,7 @@ func (_Contracts *ContractsFilterer) WatchProductCreated(opts *bind.WatchOpts, s
 
 // ParseProductCreated is a log parse operation binding the contract event 0x4478fdb5cca1a28d79052038c209db14519451af9c6bc6e753a2614e5ea43f1a.
 //
-// Solidity: event ProductCreated(string productId, string productName, address indexed creator)
+// Solidity: event ProductCreated(string productId, string name, address indexed creator)
 func (_Contracts *ContractsFilterer) ParseProductCreated(log types.Log) (*ContractsProductCreated, error) {
 	event := new(ContractsProductCreated)
 	if err := _Contracts.contract.UnpackLog(event, "ProductCreated", log); err != nil {
@@ -957,18 +954,16 @@ func (it *ContractsStepAddedIterator) Close() error {
 
 // ContractsStepAdded represents a StepAdded event raised by the Contracts contract.
 type ContractsStepAdded struct {
-	TraceID     string
 	ProductId   string
 	Location    string
-	EventType   string
 	Description string
 	Actor       common.Address
 	Raw         types.Log // Blockchain specific contextual infos
 }
 
-// FilterStepAdded is a free log retrieval operation binding the contract event 0xdc91cc039bf6da3eb8412756285ab6c1fad427e46077691a454a4a47139d7741.
+// FilterStepAdded is a free log retrieval operation binding the contract event 0x3c66040d016bf8d013627308249820b8a0140bc6112f12bcbef7f0d26bb63fc1.
 //
-// Solidity: event StepAdded(string traceID, string productId, string location, string eventType, string description, address indexed actor)
+// Solidity: event StepAdded(string productId, string location, string description, address indexed actor)
 func (_Contracts *ContractsFilterer) FilterStepAdded(opts *bind.FilterOpts, actor []common.Address) (*ContractsStepAddedIterator, error) {
 
 	var actorRule []interface{}
@@ -983,9 +978,9 @@ func (_Contracts *ContractsFilterer) FilterStepAdded(opts *bind.FilterOpts, acto
 	return &ContractsStepAddedIterator{contract: _Contracts.contract, event: "StepAdded", logs: logs, sub: sub}, nil
 }
 
-// WatchStepAdded is a free log subscription operation binding the contract event 0xdc91cc039bf6da3eb8412756285ab6c1fad427e46077691a454a4a47139d7741.
+// WatchStepAdded is a free log subscription operation binding the contract event 0x3c66040d016bf8d013627308249820b8a0140bc6112f12bcbef7f0d26bb63fc1.
 //
-// Solidity: event StepAdded(string traceID, string productId, string location, string eventType, string description, address indexed actor)
+// Solidity: event StepAdded(string productId, string location, string description, address indexed actor)
 func (_Contracts *ContractsFilterer) WatchStepAdded(opts *bind.WatchOpts, sink chan<- *ContractsStepAdded, actor []common.Address) (event.Subscription, error) {
 
 	var actorRule []interface{}
@@ -1025,9 +1020,9 @@ func (_Contracts *ContractsFilterer) WatchStepAdded(opts *bind.WatchOpts, sink c
 	}), nil
 }
 
-// ParseStepAdded is a log parse operation binding the contract event 0xdc91cc039bf6da3eb8412756285ab6c1fad427e46077691a454a4a47139d7741.
+// ParseStepAdded is a log parse operation binding the contract event 0x3c66040d016bf8d013627308249820b8a0140bc6112f12bcbef7f0d26bb63fc1.
 //
-// Solidity: event StepAdded(string traceID, string productId, string location, string eventType, string description, address indexed actor)
+// Solidity: event StepAdded(string productId, string location, string description, address indexed actor)
 func (_Contracts *ContractsFilterer) ParseStepAdded(log types.Log) (*ContractsStepAdded, error) {
 	event := new(ContractsStepAdded)
 	if err := _Contracts.contract.UnpackLog(event, "StepAdded", log); err != nil {
