@@ -19,6 +19,10 @@ func NewRouter(
 		DB: db,
 	}
 
+	userHandler := &handlers.UserHandler{
+		DB: db,
+	}
+
 	// Route cho sản phẩm
 	r := gin.Default()
 	// r.Use(cors.New(cors.Config{
@@ -41,6 +45,12 @@ func NewRouter(
 		traces := api.Group("/traces")
 		{
 			traces.GET("/get-trace", traceHandler.SaveTraceHistory)
+		}
+
+		users := api.Group("/users")
+		{
+			users.POST("", userHandler.CreateUser)
+			users.GET("", userHandler.GetAllUsers)
 		}
 	}
 
