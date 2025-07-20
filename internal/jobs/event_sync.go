@@ -16,5 +16,5 @@ func StartEventListener(db *gorm.DB, rpcURL string, contractAddress string) {
 	}
 
 	addr := common.HexToAddress(contractAddress)
-	eth.ListenToEvents(client, addr, db)
+	eth.ListenContractEvents(client, addr, db)
 }

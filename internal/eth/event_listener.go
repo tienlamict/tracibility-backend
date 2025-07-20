@@ -11,15 +11,22 @@ import (
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/google/uuid"
 )
 
-func ListenToEvents(client *ethclient.Client, contractAddr common.Address, db *gorm.DB) {
+func ListenContractEvents(client *ethclient.Client, contractAddr common.Address, db *gorm.DB) {
 	contractInstance, err := contracts.NewContracts(contractAddr, client)
 	if err != nil {
-		log.Fatalf("Bind contract lỗi: %v", err)
+		log.Fatalf("Bind contract error: %v", err)
 	}
 
+	// Tính topic hash cho từng sự kiện
+	topicProductCreated := crypto.Keccak256Hash([]byte("ProductCreated(string,string,string,address,uint8)"))
+	topicStepAdded := crypto.Keccak256Hash([]byte("StepAdded(string,string,string,address,uint8)"))
+
+	// Lắng nghe tất cả log từ contract
 	query := ethereum.FilterQuery{
 		Addresses: []common.Address{contractAddr},
 	}
@@ -27,35 +34,93 @@ func ListenToEvents(client *ethclient.Client, contractAddr common.Address, db *g
 	logs := make(chan types.Log)
 	sub, err := client.SubscribeFilterLogs(context.Background(), query, logs)
 	if err != nil {
-		log.Fatalf("Lỗi subscribe: %v", err)
+		log.Fatalf("Subscribe error: %v", err)
 	}
 
-	log.Println("Đang lắng nghe sự kiện...")
+	log.Println("Lắng nghe sự kiện ProductCreated & StepAdded...")
 
 	for {
 		select {
 		case err := <-sub.Err():
-			log.Println("Lỗi subscription:", err)
+			log.Println("Subscription error:", err)
+
 		case vLog := <-logs:
-			event, err := contractInstance.ParseStepAdded(vLog)
-			if err != nil {
-				log.Println("Parse log lỗi:", err)
+			if len(vLog.Topics) == 0 {
 				continue
 			}
 
-			trace := models.ProductTrace{
-				ProductID: event.ProductId,
-				//EventType: event.EventType,
-				Location:    event.Location,
-				Description: event.Description,
-				TxHash:      vLog.TxHash.Hex(),
-				TxStatus:    "SUCCESS",
-			}
+			switch vLog.Topics[0] {
+			case topicProductCreated:
+				event, err := contractInstance.ParseProductCreated(vLog)
+				if err != nil {
+					log.Println("Parse ProductCreated lỗi:", err)
+					continue
+				}
 
-			if err := db.Create(&trace).Error; err != nil {
-				log.Println("Lỗi ghi DB:", err)
-			} else {
-				log.Printf("Event thêm bước truy xuất ghi DB: %s\n", event.ProductId)
+				statusString, ok := ProductStatusMap[event.Status]
+				if !ok {
+					statusString = "Unknown"
+				}
+
+				product := models.Product{
+					ProductID:   event.ProductId,
+					ProductName: event.Name,
+					Location:    event.Location,
+					Status:      statusString,
+					Creator:     event.Creator.Hex(),
+				}
+
+				trace := models.ProductTrace{
+					TraceID:   uuid.New().String(),
+					ProductID: event.ProductId,
+					EventType: statusString,
+					Location:  event.Location,
+					Actor:     event.Creator.Hex(),
+					TxHash:    vLog.TxHash.Hex(),
+					TxStatus:  "SUCCESS",
+				}
+
+				if err := db.Create(&product).Error; err != nil {
+					log.Println("Ghi Product lỗi:", err)
+				} else {
+					log.Printf("Đã ghi ProductCreated: %s\n", event.ProductId)
+				}
+
+				if err := db.Create(&trace).Error; err != nil {
+					log.Println("Ghi StepAdded lỗi:", err)
+				} else {
+					log.Printf("Đã ghi StepAdded: %s\n", event.ProductId)
+				}
+
+			case topicStepAdded:
+				event, err := contractInstance.ParseStepAdded(vLog)
+				if err != nil {
+					log.Println("Parse StepAdded lỗi:", err)
+					continue
+				}
+
+				eventTypeString, ok := StepStatusMap[event.Status]
+				if !ok {
+					eventTypeString = "Unknown"
+				}
+
+				trace := models.ProductTrace{
+					TraceID:   uuid.New().String(),
+					ProductID: event.ProductId,
+					EventType: eventTypeString,
+					Location:  event.Location,
+					Actor:     event.Actor.Hex(),
+					TxHash:    vLog.TxHash.Hex(),
+					TxStatus:  "SUCCESS",
+				}
+
+				if err := db.Create(&trace).Error; err != nil {
+					log.Println("Ghi StepAdded lỗi:", err)
+				} else {
+					log.Printf("Đã ghi StepAdded: %s\n", event.ProductId)
+				}
+			default:
+				log.Println("Không phải event đã xử lý, bỏ qua")
 			}
 		}
 	}

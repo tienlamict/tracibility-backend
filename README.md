@@ -8,21 +8,15 @@ go get github.com/ethereum/go-ethereum/rpc@latest
 
 go get github.com/ethereum/go-ethereum/accounts/keystore@latest
 
-abigen --abi=internal/contracts/Traceability.abi.json --pkg=contracts --out=internal/contracts/contract.go
-
 go get -u github.com/skip2/go-qrcode/...
 
 go get github.com/spf13/viper@latest
 
 go get gorm.io/driver/mysql
 
+go get -u github.com/golang-jwt/jwt/v5
 
-| Thành phần     | Vai trò đề xuất                                  |
-| -------------- | ------------------------------------------------ |
-| **Frontend**   | Vẫn dùng MetaMask để ký tx.                      |
-| **Backend Go** | Thêm:                                            |
-|                | - Kiểm tra txHash trạng thái (pending, fail...). |
-|                | - Lưu lịch sử truy xuất.                         |
-|                | - Tạo QR code từ product ID.                     |
-|                | - Tự động crawl event từ contract và lưu DB.     |
-|                | - Tạo dashboard thống kê.                        |
+go get github.com/gin-contrib/cors
+
+// Gen lại contract từ file abi
+abigen --abi=internal/contracts/Traceability.abi.json --pkg=contracts --out=internal/contracts/contract.go

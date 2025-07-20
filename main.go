@@ -27,6 +27,6 @@ func main() {
 
 	r := routes.NewRouter(db)
 	port := cfg.Server.Port
-	fmt.Printf("🚀 Server running at http://localhost:%s\n", port)
+	fmt.Printf("Server running at http://localhost:%s\n", port)
 	r.Run(":" + port)
 }
