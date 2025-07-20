@@ -23,8 +23,8 @@ func ListenContractEvents(client *ethclient.Client, contractAddr common.Address,
 	}
 
 	// Tính topic hash cho từng sự kiện
-	topicProductCreated := crypto.Keccak256Hash([]byte("ProductCreated(string,string,address)"))
-	topicStepAdded := crypto.Keccak256Hash([]byte("StepAdded(string,string,string,address)"))
+	topicProductCreated := crypto.Keccak256Hash([]byte("ProductCreated(string,string,string,address,uint8)"))
+	topicStepAdded := crypto.Keccak256Hash([]byte("StepAdded(string,string,string,address,uint8)"))
 
 	// Lắng nghe tất cả log từ contract
 	query := ethereum.FilterQuery{
@@ -70,10 +70,26 @@ func ListenContractEvents(client *ethclient.Client, contractAddr common.Address,
 					Creator:     event.Creator.Hex(),
 				}
 
+				trace := models.ProductTrace{
+					TraceID:   uuid.New().String(),
+					ProductID: event.ProductId,
+					EventType: statusString,
+					Location:  event.Location,
+					Actor:     event.Creator.Hex(),
+					TxHash:    vLog.TxHash.Hex(),
+					TxStatus:  "SUCCESS",
+				}
+
 				if err := db.Create(&product).Error; err != nil {
 					log.Println("Ghi Product lỗi:", err)
 				} else {
 					log.Printf("Đã ghi ProductCreated: %s\n", event.ProductId)
+				}
+
+				if err := db.Create(&trace).Error; err != nil {
+					log.Println("Ghi StepAdded lỗi:", err)
+				} else {
+					log.Printf("Đã ghi StepAdded: %s\n", event.ProductId)
 				}
 
 			case topicStepAdded:

@@ -54,6 +54,7 @@ func NewRouter(
 			users.POST("/create", userHandler.CreateUser)
 			users.GET("", userHandler.GetAllUsers)
 			users.POST("/auth/login", handlers.LoginHandler(db))
+			users.POST("/auth/wallet-verify", handlers.VerifyWalletHandler(db))
 		}
 	}
 

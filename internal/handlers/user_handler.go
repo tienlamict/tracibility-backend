@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strings"
 	"tracibility/internal/database/models"
 	"tracibility/internal/services"
 
@@ -79,5 +80,38 @@ func LoginHandler(db *gorm.DB) gin.HandlerFunc {
 			"user_role": user.UserRole,
 			"status":    "success",
 		})
+	}
+}
+
+// api/wallet/verify
+func VerifyWalletHandler(db *gorm.DB) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tokenStr := c.GetHeader("Authorization")
+		userName, err := services.ParseJWT(tokenStr)
+		if err != nil {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Token không hợp lệ"})
+			return
+		}
+
+		var req struct {
+			WalletAddress string `json:"wallet"`
+		}
+		if err := c.ShouldBindJSON(&req); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Yêu cầu không hợp lệ"})
+			return
+		}
+
+		var user models.User
+		if err := db.First(&user, "user_name = ?", userName).Error; err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Không tìm thấy người dùng"})
+			return
+		}
+
+		if !strings.EqualFold(user.WalletAddress, req.WalletAddress) {
+			c.JSON(http.StatusForbidden, gin.H{"error": "Địa chỉ ví không khớp với tài khoản"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{"success": true})
 	}
 }
