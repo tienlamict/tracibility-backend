@@ -1,5 +1,12 @@
 package eth
 
+var ProductStatusMap = map[uint8]string{
+	0: "Created",
+	1: "InProgress",
+	2: "Completed",
+	3: "Rejected",
+}
+
 var StepStatusMap = map[uint8]string{
 	0: "Manufactured",
 	1: "Inspected",

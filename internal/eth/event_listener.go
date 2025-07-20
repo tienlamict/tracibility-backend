@@ -57,10 +57,16 @@ func ListenContractEvents(client *ethclient.Client, contractAddr common.Address,
 					continue
 				}
 
+				statusString, ok := ProductStatusMap[event.Status]
+				if !ok {
+					statusString = "Unknown"
+				}
+
 				product := models.Product{
 					ProductID:   event.ProductId,
 					ProductName: event.Name,
 					Location:    event.Location,
+					Status:      statusString,
 					Creator:     event.Creator.Hex(),
 				}
 
@@ -77,15 +83,15 @@ func ListenContractEvents(client *ethclient.Client, contractAddr common.Address,
 					continue
 				}
 
-				statusString, ok := StepStatusMap[event.Status]
+				eventTypeString, ok := StepStatusMap[event.Status]
 				if !ok {
-					statusString = "Unknown"
+					eventTypeString = "Unknown"
 				}
 
 				trace := models.ProductTrace{
 					TraceID:   uuid.New().String(),
 					ProductID: event.ProductId,
-					EventType: statusString,
+					EventType: eventTypeString,
 					Location:  event.Location,
 					Actor:     event.Actor.Hex(),
 					TxHash:    vLog.TxHash.Hex(),
