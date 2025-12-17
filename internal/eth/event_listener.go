@@ -26,7 +26,7 @@ func ListenContractEvents(client *ethclient.Client, contractAddr common.Address,
 	topicProductCreated := crypto.Keccak256Hash([]byte("ProductCreated(string,string,string,address,uint8)"))
 	topicStepAdded := crypto.Keccak256Hash([]byte("StepAdded(string,string,string,address,uint8)"))
 
-	// Lắng nghe tất cả log từ contract
+	// Lắng nghe tất cả log từ contract theo địa chỉ truyền vào
 	query := ethereum.FilterQuery{
 		Addresses: []common.Address{contractAddr},
 	}
